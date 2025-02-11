@@ -1,46 +1,121 @@
 # OnDeviceSoftSensorMLP
 
-## Overview
-OnDeviceSoftSensorMLP is an open-source repository that demonstrates the end-to-end development and deployment of Multi-Layer Perceptron (MLP)-based soft sensors on embedded FPGA platforms. This repository is designed to support diverse deployment objectives, such as high precision, low latency, low power consumption, and energy efficiency.
-
-## Status
-The code is being finalized and will be released soon. Please stay tuned for updates.
+This is the code for your paper titled **Configurable Multi-Layer Perceptron-Based Soft Sensors on Embedded Field Programmable Gate Arrays: Targeting Diverse Deployment Goals in Fluid Flow Estimation**
 
 
-## Features
-- **Quantization-Aware Training (QAT)**: Train integer-only quantized models tailored for deployment on resource-constrained FPGAs.
-- **FPGA-Compatible Accelerator Generation**: Automatically generate FPGA accelerators using VHDL templates with the support of the ElasticAI.Creator Toolchain.
-- **Hardware Simulation and Validation**: Simulate, synthesize, and deploy accelerators to validate performance, including inference latency, power, and precision.
-- **Support for Diverse FPGA Platforms**: Includes workflows tailored for the AMD Spartan-7 XC7S15 and the Lattice iCE40UP5K.
+This study presents a comprehensive workflow for developing and deploying Multi-Layer Perceptron (MLP)-based soft sensors on embedded FPGAs, addressing diverse deployment objectives. The proposed workflow extends our prior research by introducing greater model adaptability. It supports various configurations—spanning layer counts, neuron counts, and quantization bitwidths—to accommodate the constraints and capabilities of different FPGA platforms. The workflow incorporates a custom-developed, open-source toolchain ElasticAI.Creator that facilitates quantization-aware training, integer-only inference, automated accelerator generation using VHDL templates, and synthesis alongside performance estimation. A case study on fluid flow estimation was conducted on two FPGA platforms: the AMD Spartan-7 XC7S15 and the Lattice iCE40UP5K. For precision-focused and latency-sensitive deployments, a six-layer, 60-neuron MLP accelerator quantized to 8 bits on the XC7S15 achieved an MSE of 56.56, an MAPE of 1.61%, and an inference latency of 23.87 μs. Moreover, for low-power and energy-constrained deployments, a five-layer, 30-neuron MLP accelerator quantized to 8 bits on the iCE40UP5K achieved an inference latency of 83.37 μs, a power consumption of 2.06 mW, and an energy consumption of just 0.172 μJ per inference. These results confirm the workflow’s ability to identify optimal FPGA accelerators tailored to specific deployment requirements, achieving a balanced trade-off between precision, inference latency, and energy efficiency.
 
-## Use Case
-This repository was developed as part of a case study on fluid flow estimation using soft sensors. It demonstrates how to:
-- Develop adaptable MLP-based soft sensors.
-- Deploy models on FPGA platforms to meet specific precision, latency, and energy efficiency goals.
+If you find this repository useful, please consider citing our [paper](https://www.mdpi.com/1424-8220/25/1/83):
+```
+@article{ling2024configurable,
+title={Configurable Multi-Layer Perceptron-Based Soft Sensors on Embedded Field Programmable Gate Arrays: Targeting Diverse Deployment Goals in Fluid Flow Estimation},
+author={Ling, Tianheng and Qian, Chao and Klann, Theodor Mario and Hoever, Julian and Einhaus, Lukas and Schiele, Gregor},
+journal={Sensors (Basel, Switzerland)},
+volume={25},
+number={1},
+pages={83},
+year={2024}
+}
+```
 
-## Supported FPGA Platforms
-- AMD Spartan-7 XC7S15
-- Lattice iCE40UP5K
+## 🚀 Overview
 
-## Integration with ElasticAI.Creator
+OnDeviceSoftSensorMLP is an open-source repository demonstrating the **end-to-end development and deployment** of Multi-Layer Perceptron (MLP)-based soft sensors on **embedded FPGA platforms**. It enables **quantized MLP models** to run efficiently on resource-constrained hardware, balancing **precision, latency, power and energy consumption**.
 
-The workflow in this repository is designed to work seamlessly with [ElasticAI.Creator](https://github.com/es-ude/elastic-ai.creator), our custom open-source toolchain for:
-- Quantization-aware training of integer-only models.
-- Generating FPGA-compatible accelerators from trained models.
+## ✨ Features
 
-## Roadmap
-1. Finalize the workflow and scripts for model quantization, accelerator generation, and validation.
-2. Provide a comprehensive set of tutorials for deploying soft sensors.
-3. Expand support to include other sequential neural network architectures.
+✔ **Quantization-Aware Training (QAT)** – Train **integer-only** quantized models for low-power deployment on FPGAs.  
+✔ **FPGA Accelerator Generation** – Automate the creation of hardware accelerators using **VHDL templates** via [ElasticAI.Creator](https://github.com/es-ude/elastic-ai.creator).  
+✔ **Hardware Simulation & Deployment** – Simulate, synthesize, and deploy models, validating inference time, power and enery consumption. 
 
-## How to Cite
-If you find this repository helpful, please cite our accompanying research paper:
-TODO
+## 🖥 Supported FPGA Platforms
+- **AMD Spartan-7 XC7S15**
+- **Lattice iCE40UP5K**
 
-## License
+## 🛠 Integration with ElasticAI.Creator
+This repository is designed to work with **[ElasticAI.Creator](https://github.com/es-ude/elastic-ai.creator)**, our open-source toolchain that:
+- **Performs Quantization-Aware Training (QAT)** for integer-only inference.
+- **Generates FPGA-compatible accelerators** from trained models.
 
-This repository is licensed under the MIT License. See the LICENSE file for details.
+## 📦 Installation
+To set up your environment, follow these steps:
+
+#### 1️⃣ Clone the Repository
+```bash
+git clone git@github.com:Edwina1030/OnDeviceSoftSensorMLP.git
+cd OnDeviceSoftSensorMLP
+```
+#### 2️⃣ Create and Activate a Virtual Environment
+Using Python’s built-in venv (recommended)
+```
+python -m venv venv --python=python3.11     # Create virtual environment
+source venv/bin/activate                    # On macOS/Linux
+venv\Scripts\activate                       # On Windows
+```
+#### 3️⃣ Install Dependencies
+```
+pip install -r requirements.txt
+```
+#### 4️⃣ Verify Installation
+```
+python -c "import torch; print(torch.__version__)"
+```
+Ensure that dependencies are correctly installed and compatible with your system.
+
+## ⚙️ FPGA Setup
+
+This project involves AMD Spartan-7 XC7S15 and Lattice iCE40UP5K platforms. Follow the instructions below to set up the FPGA toolchains accordingly.
+
+#### 1️⃣ Install AMD Vivado (for Spartan-7)
+
+Vivado is the official development environment for AMD (Xilinx) FPGAs, supporting FPGA design, synthesis, and deployment.
+**Installation Steps**
+1. Download AMD Vivado (recommended version: 2022.2 or later).
+2. Choose the WebPACK edition (free version), which supports Spartan-7.
+3. During installation, select the FPGA design suite and ensure Spartan-7-related components are included.
+4. After installation, add Vivado to your environment variables:
+```
+source /opt/Xilinx/Vivado/2022.2/settings64.sh  # Linux
+C:\Xilinx\Vivado\2022.2\settings64.bat          # Windows
+```
+
+#### 2️⃣ Install Lattice Radiant (for iCE40UP5K)
+
+Lattice Radiant is the official development environment for Lattice FPGAs, supporting low-power FPGA design.
+**Installation Steps**
+1. Download Lattice Radiant (recommended version: 2023.1 or later).
+2. Register and obtain a free license.
+3. During installation, ensure that the iCE40UP5K components are selected.
+4. Add Radiant to your environment variables:
+```
+source /usr/local/lscc/radiant/2023.1/settings.sh  # Linux
+set PATH=C:\lscc\radiant\2023.1\bin\nt64;%PATH%  # Windows
+```
+
+## 🧪 Experiment
+### 1️⃣ Train the FP32 Models as Baseline
+```
+bash scripts/software/float/train.sh
+```
+### 2️⃣ Train the Quantized Models
+```
+bash scripts/software/quant/train.sh
+```
+### 3️⃣ Select Records for Hardware Simulation
+copy path to ``scripts/hardware/selected_timestamps.txt``
+
+### 4️⃣ Execute Hardware Simulation
+```
+bash scripts/hardware/AMD/estimate_hardware.sh      # For AMD FPGA
+bash scripts/hardware/Lattice/estimate_hardware.sh  # For Lattice FPGA
+```
+### 5️⃣ Evaluation Hardware Performance
+Use the analysis scripts in the ``utils`` folder for extract information from reports
+- analyze_amd_report.py      
+- analyze_lattice_report.py 
+
+## 🎓 Acknowledgement
+Funding for this study was provided by the Federal Ministry for Economic Affairs and Climate Action of Germany to the RIWWER project (01MD22007C).
 
 ## Contact
-
 For questions or feedback, please feel free to open an issue or contact us at tianheng.ling@uni-due.de.
