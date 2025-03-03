@@ -3,8 +3,8 @@ from .QuantMLP import QuantMLP
 
 
 def build_model(**kwargs):
-    is_quantized = kwargs.get("is_quantized")
-    if is_quantized:
+    is_qat = kwargs.get("is_qat")
+    if is_qat:
         return QuantMLP(**kwargs)
     else:
         return FloatMLP(**kwargs)

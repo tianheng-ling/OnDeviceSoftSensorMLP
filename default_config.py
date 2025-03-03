@@ -10,8 +10,8 @@ data_default_config = {
 }
 
 model_default_config = {
-    "input_size": 3,
-    "output_size": 1,
+    "in_features": 3,
+    "out_features": 1,
 }
 
 exp_default_config = {

@@ -1,1 +1,0 @@
-pnmainc power_estimation.tcl # generate power report

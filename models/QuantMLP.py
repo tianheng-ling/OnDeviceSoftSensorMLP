@@ -1,20 +1,28 @@
 import torch
 import torch.nn as nn
-from pathlib import Path
 
 from elasticai.creator.nn.integer.linear import Linear
 from elasticai.creator.nn.integer.relu import ReLU
 from elasticai.creator.nn.integer.sequential import Sequential
+from elasticai.creator.nn.integer.vhdl_test_automation.file_save_utils import (
+    save_quant_data,
+)
 
 
 class QuantMLP(nn.Module):
     def __init__(self, **kwargs):
         super().__init__()
 
-        # get the parameters
+        in_features = kwargs.get("in_features")
+        hidden_size = kwargs.get("hidden_size")
+        out_features = kwargs.get("out_features")
         self.num_hidden_layers = kwargs.get("num_hidden_layers")
-        self.do_int_forward = kwargs.get("do_int_forward")
+
         self.name = kwargs.get("name")
+        self.quant_bits = kwargs.get("quant_bits")
+        self.do_int_forward = kwargs.get("do_int_forward")
+        self.quant_data_dir = kwargs.get("quant_data_dir", None)
+        device = kwargs.get("device")
 
         # initialize the self.layers
         self.layers = nn.ModuleList()
@@ -23,17 +31,21 @@ class QuantMLP(nn.Module):
         self.layers.append(
             Linear(
                 name="linear_0",
-                in_features=kwargs.get("input_size"),
-                out_features=kwargs.get("hidden_size"),
+                in_features=in_features,
+                out_features=hidden_size,
                 bias=True,
-                quant_bits=kwargs.get("input_linear_quant_bits"),
-                device=kwargs.get("device")
+                quant_bits=self.quant_bits,
+                quant_data_dir=self.quant_data_dir,
+                device=device,
             )
         )
         self.layers.append(
-            ReLU(name="relu_0", 
-            quant_bits=kwargs.get("input_relu_quant_bits"),
-            device=kwargs.get("device"),)
+            ReLU(
+                name="relu_0",
+                quant_bits=self.quant_bits,
+                quant_data_dir=self.quant_data_dir,
+                device=device,
+            )
         )
 
         # hidden self.layers
@@ -42,18 +54,20 @@ class QuantMLP(nn.Module):
                 self.layers.append(
                     Linear(
                         name=f"linear_{i+1}",
-                        in_features=kwargs.get("hidden_size"),
-                        out_features=kwargs.get("hidden_size"),
+                        in_features=hidden_size,
+                        out_features=hidden_size,
                         bias=True,
-                        quant_bits=kwargs.get(f"hidden_linear_{i}_quant_bits"),
-                        device=kwargs.get("device")
+                        quant_bits=self.quant_bits,
+                        quant_data_dir=self.quant_data_dir,
+                        device=device,
                     )
                 )
                 self.layers.append(
                     ReLU(
                         name=f"relu_{i+1}",
-                        quant_bits=kwargs.get(f"hidden_linear_{i}_relu_quant_bits"),
-                        device=kwargs.get("device")
+                        quant_bits=self.quant_bits,
+                        quant_data_dir=self.quant_data_dir,
+                        device=device,
                     )
                 )
 
@@ -61,15 +75,20 @@ class QuantMLP(nn.Module):
         self.layers.append(
             Linear(
                 name=f"linear_{self.num_hidden_layers+1}",
-                in_features=kwargs.get("hidden_size"),
-                out_features=kwargs.get("output_size"),
+                in_features=hidden_size,
+                out_features=out_features,
                 bias=True,
-                quant_bits=kwargs.get("output_linear_quant_bits"),
-                device=kwargs.get("device")
+                quant_bits=self.quant_bits,
+                quant_data_dir=self.quant_data_dir,
+                device=device,
             )
         )
 
-        self.sequential = Sequential(*self.layers, name=self.name,quant_data_file_dir=kwargs.get("quant_data_file_dir"))
+        self.sequential = Sequential(
+            *self.layers,
+            name=self.name,
+            quant_data_dir=self.quant_data_dir,
+        )
 
     def forward(
         self,
@@ -80,7 +99,9 @@ class QuantMLP(nn.Module):
             self.sequential.precompute()
             inputs = inputs.to("cpu")
             q_inputs = self.sequential.quantize_inputs(inputs)
+            save_quant_data(q_inputs, self.quant_data_dir, f"{self.name}_q_x")
             q_outputs = self.sequential.int_forward(q_inputs)
+            save_quant_data(q_outputs, self.quant_data_dir, f"{self.name}_q_y")
             return self.sequential.dequantize_outputs(q_outputs)
         else:
             return self.sequential.forward(inputs)

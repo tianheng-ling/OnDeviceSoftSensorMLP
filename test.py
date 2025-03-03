@@ -8,13 +8,11 @@ from sklearn.metrics import r2_score
 
 from default_config import DEVICE
 from models.build_model import build_model
-from utils.plots import save_pred_truth_line_plot
 
 
 def test(
     model_params: dict,
     test_dataloader: DataLoader,
-    inference_dataloader: DataLoader,
     target_normalizer: object,
     exp_config: dict,
 ) -> object:
@@ -95,38 +93,5 @@ def test(
     logging.info(f"{prefix}_mape_denorm: {test_mape_denorm:.4f}")
     logging.info(f"{prefix}_r2: {test_r2:.4f}")
     logging.info(f"{prefix}_r2_denorm: {test_r2_denorm:.4f}")
-
-    # perform inference on the whole dataset (just for visualization)
-    model.eval()
-    all_preds = []
-    all_targets = []
-    with torch.no_grad():
-        for inference_samples, inference_target in inference_dataloader:
-
-            inference_samples = inference_samples.to(DEVICE)
-            inference_target = inference_target.to(DEVICE)
-
-            pred = model(inputs=inference_samples)
-
-            all_preds.append(pred.flatten().cpu().numpy())
-            all_targets.append(inference_target.flatten().cpu().numpy())
-
-    all_preds = torch.tensor(np.array(all_preds))
-    all_targets = torch.tensor(np.array(all_targets))
-
-    all_preds_denorm = target_normalizer.rescale(all_preds)
-    all_targets_denorm = target_normalizer.rescale(all_targets)
-
-    prefix = (
-        "int_inference"
-        if hasattr(model, "do_int_forward") and model.do_int_forward
-        else "inference"
-    )
-    save_pred_truth_line_plot(
-        pred=all_preds_denorm,
-        truth=all_targets_denorm,
-        fig_save_dir=exp_config["fig_save_dir"],
-        prefix=prefix,
-    )
 
     return test_loss, test_loss_denorm

@@ -129,6 +129,11 @@ def train_val(
     exp_val_loss = np.min(all_val_epoch_losses)
     exp_val_loss_denorm = np.min(all_val_epoch_losses_denorm)
 
+    print(f"Train Loss: {exp_train_loss}; Train Loss Denorm: {exp_train_loss_denorm}")
+    print(
+        f"Validation Loss: {exp_val_loss}; Validation Loss Denorm: {exp_val_loss_denorm}"
+    )
+
     plot_learning_curve(
         epochs=range(1, len(all_train_epoch_losses) + 1),
         train_losses=all_train_epoch_losses,
