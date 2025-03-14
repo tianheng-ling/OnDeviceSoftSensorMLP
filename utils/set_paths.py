@@ -16,31 +16,6 @@ def set_base_paths(exp_base_save_dir: str):
     return exp_save_dir, fig_save_dir, log_save_dir
 
 
-import os
-from pathlib import Path
-from datetime import datetime
-
-
-def set_base_paths(exp_mode: str, exp_base_save_dir: str, given_timestamp: str = None):
-
-    if exp_mode not in {"train", "test"}:
-        raise ValueError(f"Unsupported exp_mode: {exp_mode}")
-
-    timestamp = (
-        given_timestamp
-        if exp_mode == "test"
-        else datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    )
-    exp_save_dir = Path(exp_base_save_dir) / timestamp
-
-    fig_save_dir, log_save_dir = exp_save_dir / "figs", exp_save_dir / "logs"
-
-    for path in [exp_save_dir, fig_save_dir, log_save_dir]:
-        os.makedirs(path, exist_ok=True)
-
-    return exp_save_dir, fig_save_dir, log_save_dir
-
-
 def get_paths_list(source_path: str):
     with open(source_path, "r") as f:
         paths_list = [line.strip() for line in f.read().splitlines()]

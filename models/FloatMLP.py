@@ -28,7 +28,7 @@ class FloatMLP(nn.Module):
 
         # output layer
         self.layers.append(
-            nn.Linear(kwargs.get("hidden_size"), kwargs.get("output_size"))
+            nn.Linear(kwargs.get("hidden_size"), kwargs.get("out_features"))
         )
 
     def forward(self, inputs: torch.FloatTensor) -> torch.FloatTensor:
