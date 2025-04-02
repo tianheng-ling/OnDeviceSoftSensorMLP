@@ -36,7 +36,7 @@ def analyze_lattice_resource_utilization(source_path: str):
                     report_info[key + "_used_util"] = round(used_relative * 100, 4)
                 report_info["dsps_total"] = 8
                 report_info["luts_total"] = 5280
-                report_info["ebr_total"] = 20
+                report_info["ebr_total"] = 30
         df_list.append(pd.DataFrame([report_info]))
     df = pd.concat(df_list, ignore_index=True)
     return df
