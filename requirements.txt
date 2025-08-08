@@ -11,7 +11,7 @@ cycler==0.12.1
 debugpy==1.8.3
 decorator==5.1.1
 docker-pycreds==0.4.0
--e git+ssh://git@github.com/es-ude/elastic-ai.creator.git@592f31d7a7163cc66e8efae70c10c37cb70f8e4f#egg=elasticai.creator
+git+ssh://git@github.com/es-ude/elastic-ai.creator.git@add-linear-quantization
 et-xmlfile==1.1.0
 executing==2.0.1
 filelock==3.15.4
