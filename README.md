@@ -114,6 +114,15 @@ Use the analysis scripts in the ``utils`` folder for extract information from re
 - analyze_amd_report.py      
 - analyze_lattice_report.py 
 
+
+### Related Repositories
+This project is part of a broader family of FPGA-optimized time-series models. You may also be interested in:
+
+- **TinyTransformer4TS** → [GitHub Repository](https://github.com/tianheng-ling/TinyTransformer4TS)  
+- **OnDeviceLSTM** → [GitHub Repository](https://github.com/tianheng-ling/EdgeOverflowForecast)
+- **OnDevice1D-(Sep)CNN** → comming soon
+
+
 ## 🎓 Acknowledgement
 Funding for this study was provided by the Federal Ministry for Economic Affairs and Climate Action of Germany to the RIWWER project (01MD22007C).
 
