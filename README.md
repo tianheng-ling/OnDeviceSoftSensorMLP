@@ -120,7 +120,7 @@ This project is part of a broader family of FPGA-optimized time-series models. Y
 
 - **TinyTransformer4TS** → [GitHub Repository](https://github.com/tianheng-ling/TinyTransformer4TS)  
 - **OnDeviceLSTM** → [GitHub Repository](https://github.com/tianheng-ling/EdgeOverflowForecast)
-- **OnDevice1D-(Sep)CNN** → comming soon
+- **OnDevice1D-(Sep)CNN** → coming soon
 
 
 ## 🎓 Acknowledgement
