@@ -118,9 +118,11 @@ Use the analysis scripts in the ``utils`` folder for extract information from re
 ### Related Repositories
 This project is part of a broader family of FPGA-optimized time-series models. You may also be interested in:
 
-- **TinyTransformer4TS** → [GitHub Repository](https://github.com/tianheng-ling/TinyTransformer4TS)  
-- **OnDeviceLSTM** → [GitHub Repository](https://github.com/tianheng-ling/EdgeOverflowForecast)
-- **OnDevice1D-(Sep)CNN** → coming soon
+- **OnDevice-1D(Sep)CNN** → [GitHub Repository](https://github.com/tianheng-ling/smatable)
+- **OnDevice-LSTM** → [GitHub Repository](https://github.com/tianheng-ling/EdgeOverflowForecast)
+- **OnDevice-Transformer** → [GitHub Repository](https://github.com/tianheng-ling/TinyTransformer4TS)
+- **OnDevice Running Gait Recognition**→ [GitHub Repository](https://github.com/tianheng-ling/StrikeWatch)
+
 
 
 ## 🎓 Acknowledgement
