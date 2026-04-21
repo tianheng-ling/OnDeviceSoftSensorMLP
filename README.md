@@ -118,15 +118,14 @@ Use the analysis scripts in the ``utils`` folder for extract information from re
 ### Related Repositories
 This project is part of a broader family of FPGA-optimized time-series models. You may also be interested in:
 
-- **OnDevice-1D(Sep)CNN** → [GitHub Repository](https://github.com/tianheng-ling/smatable)
-- **OnDevice-LSTM** → [GitHub Repository](https://github.com/tianheng-ling/EdgeOverflowForecast)
-- **OnDevice-Transformer** → [GitHub Repository](https://github.com/tianheng-ling/TinyTransformer4TS)
-- **OnDevice Running Gait Recognition**→ [GitHub Repository](https://github.com/tianheng-ling/StrikeWatch)
-
+- **On Device Swipe Direction Recognition with 1D(Sep)CNNs** → [GitHub Repository](https://github.com/tianheng-ling/Smatable)
+- **On Device Transformers across various time-series analysis tasks** → [GitHub Repository](https://github.com/tianheng-ling/TinyTransformer4TS) 
+- **On Device Sewage Overflow Forefasting with Transforemrs and LSTMs** → [GitHub Repository](https://github.com/tianheng-ling/EdgeOverflowForecast)
+- **On Device Running Gait Recognition with various time-series models** → [GitHub Repository](https://github.com/tianheng-ling/StrikeWatch)
 
 
 ## 🎓 Acknowledgement
 Funding for this study was provided by the Federal Ministry for Economic Affairs and Climate Action of Germany to the RIWWER project (01MD22007C).
 
 ## Contact
-For questions or feedback, please feel free to open an issue or contact us at tianheng.ling@uni-due.de.
+For questions or feedback, please feel free to open an issue or contact us at ling.tianheng@gmail.com.
